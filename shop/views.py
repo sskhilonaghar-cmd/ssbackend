@@ -35,7 +35,7 @@ class OrderViewSet(viewsets.ModelViewSet):
             order = Order.objects.get(id=order_id)
             from urllib.parse import quote
             msg = quote(f"New order #{order.id}: {order.product.name} x{order.quantity} for {order.customer_name} ({order.phone})\nAddress: {order.address}")
-            response.data['whatsapp_url'] = f"https://wa.me/919876543210?text={msg}"
+            response.data['whatsapp_url'] = f"https://wa.me/917897391004?text={msg}"
         except Exception:
             pass
         return response
