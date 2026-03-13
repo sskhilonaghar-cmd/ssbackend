@@ -23,7 +23,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 INSTALLED_APPS = [
 
-```
+
 # Cloudinary (must come before staticfiles)
 "cloudinary_storage",
 "cloudinary",
