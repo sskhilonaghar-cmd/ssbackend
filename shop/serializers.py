@@ -3,40 +3,27 @@ from .models import Product, Order, GalleryImage
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
+    image = serializers.CharField(source="image.url", read_only=True)
 
     class Meta:
         model = Product
-        fields = '__all__'
-
-    def get_image(self, obj):
-        if obj.image:
-            return obj.image.url
-        return None
+        fields = "__all__"
 
 
 class OrderSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source='product.name', read_only=True)
     product_price = serializers.DecimalField(
-        source='product.price',
-        max_digits=10,
-        decimal_places=2,
-        read_only=True
+        source='product.price', max_digits=10, decimal_places=2, read_only=True
     )
 
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = "__all__"
 
 
 class GalleryImageSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
+    image = serializers.CharField(source="image.url", read_only=True)
 
     class Meta:
         model = GalleryImage
-        fields = '__all__'
-
-    def get_image(self, obj):
-        if obj.image:
-            return obj.image.url
-        return None
+        fields = "__all__"
