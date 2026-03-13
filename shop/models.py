@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 
 class Product(models.Model):
@@ -15,7 +16,9 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+
+    image = CloudinaryField('image', blank=True, null=True)
+
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='toys')
     stock = models.PositiveIntegerField(default=0)
     featured = models.BooleanField(default=False)
@@ -51,7 +54,9 @@ class Order(models.Model):
 
 
 class GalleryImage(models.Model):
-    image = models.ImageField(upload_to='gallery/')
+
+    image = CloudinaryField('image')
+
     caption = models.CharField(max_length=300, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
