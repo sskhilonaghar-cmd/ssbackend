@@ -5,7 +5,6 @@ Django settings for sskhilona project.
 from pathlib import Path
 import os
 import dj_database_url
-import cloudinary
 
 BASE_DIR = Path(**file**).resolve().parent.parent
 
@@ -24,21 +23,27 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 INSTALLED_APPS = [
 
-    "cloudinary_storage",
-    "django.contrib.staticfiles",
-    "cloudinary",
+```
+# Cloudinary (must come before staticfiles)
+"cloudinary_storage",
+"cloudinary",
 
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
+"django.contrib.admin",
+"django.contrib.auth",
+"django.contrib.contenttypes",
+"django.contrib.sessions",
+"django.contrib.messages",
+"django.contrib.staticfiles",
 
-    "rest_framework",
-    "rest_framework.authtoken",
-    "corsheaders",
+# Third party
+"rest_framework",
+"rest_framework.authtoken",
+"corsheaders",
 
-    "shop",
+# Local apps
+"shop",
+```
+
 ]
 
 # ---------------- MIDDLEWARE ----------------
@@ -120,22 +125,13 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ---------------- CLOUDINARY STORAGE ----------------
 
-# Force Django to use Cloudinary for all uploaded files
-
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+"CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+"API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+"API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
 }
-# Cloudinary configuration
-
-cloudinary.config(
-cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
-api_key=os.environ.get("CLOUDINARY_API_KEY"),
-api_secret=os.environ.get("CLOUDINARY_API_SECRET")
-)
 
 # ---------------- DEFAULT PRIMARY KEY ----------------
 
