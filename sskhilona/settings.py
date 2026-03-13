@@ -6,13 +6,13 @@ from pathlib import Path
 import os
 import dj_database_url
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(**file**).resolve().parent.parent
 
 # ---------------- SECURITY ----------------
 
 SECRET_KEY = os.environ.get(
 "DJANGO_SECRET_KEY",
-"django-insecure-#lw4%&t4n=^4ln%gbs_@!jof3!mv#)yv3_0sq2e9!8%d=*$izw"
+"django-insecure-temp-key-change-in-production"
 )
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 "cloudinary_storage",
 "cloudinary",
 
+# Django
 "django.contrib.admin",
 "django.contrib.auth",
 "django.contrib.contenttypes",
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
 "django.contrib.messages",
 "django.contrib.staticfiles",
 
-# Third party
+# Third-party
 "rest_framework",
 "rest_framework.authtoken",
 "corsheaders",
@@ -52,16 +53,12 @@ MIDDLEWARE = [
 "corsheaders.middleware.CorsMiddleware",
 "django.middleware.security.SecurityMiddleware",
 "whitenoise.middleware.WhiteNoiseMiddleware",
-
-```
 "django.contrib.sessions.middleware.SessionMiddleware",
 "django.middleware.common.CommonMiddleware",
 "django.middleware.csrf.CsrfViewMiddleware",
 "django.contrib.auth.middleware.AuthenticationMiddleware",
 "django.contrib.messages.middleware.MessageMiddleware",
 "django.middleware.clickjacking.XFrameOptionsMiddleware",
-```
-
 ]
 
 ROOT_URLCONF = "sskhilona.urls"
