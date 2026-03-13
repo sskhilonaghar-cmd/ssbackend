@@ -3,25 +3,28 @@ from .models import Product, Order, GalleryImage
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
+
+    image = serializers.ImageField(required=False, allow_null=True)
 
     class Meta:
         model = Product
         fields = "__all__"
 
-    def get_image(self, obj):
-        if obj.image:
-            try:
-                return obj.image.url
-            except:
-                return None
-        return None
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        if instance.image:
+            data["image"] = instance.image.url
+
+        return data
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    product_name = serializers.CharField(source='product.name', read_only=True)
+
+    product_name = serializers.CharField(source="product.name", read_only=True)
+
     product_price = serializers.DecimalField(
-        source='product.price',
+        source="product.price",
         max_digits=10,
         decimal_places=2,
         read_only=True
@@ -33,16 +36,17 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class GalleryImageSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
+
+    image = serializers.ImageField(required=False)
 
     class Meta:
         model = GalleryImage
         fields = "__all__"
 
-    def get_image(self, obj):
-        if obj.image:
-            try:
-                return obj.image.url
-            except:
-                return None
-        return None
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        if instance.image:
+            data["image"] = instance.image.url
+
+        return data
