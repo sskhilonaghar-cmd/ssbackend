@@ -23,27 +23,22 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
 # ---------------- INSTALLED APPS ----------------
 
 INSTALLED_APPS = [
-"django.contrib.admin",
-"django.contrib.auth",
-"django.contrib.contenttypes",
-"django.contrib.sessions",
-"django.contrib.messages",
-"django.contrib.staticfiles",
 
-```
-# Third-party
-"rest_framework",
-"rest_framework.authtoken",
-"corsheaders",
+    "cloudinary_storage",
+    "django.contrib.staticfiles",
+    "cloudinary",
 
-# Cloudinary
-"cloudinary",
-"cloudinary_storage",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
 
-# Local apps
-"shop",
-```
+    "rest_framework",
+    "rest_framework.authtoken",
+    "corsheaders",
 
+    "shop",
 ]
 
 # ---------------- MIDDLEWARE ----------------
