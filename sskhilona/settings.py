@@ -5,10 +5,12 @@ Django settings for sskhilona project.
 from pathlib import Path
 import os
 import dj_database_url
+import cloudinary
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# production settings reading from environment
+
+# SECURITY
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
     "django-insecure-#lw4%&t4n=^4ln%gbs_@!jof3!mv#)yv3_0sq2e9!8%d=*$izw"
@@ -16,10 +18,10 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-# allowed hosts for render deployment
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 
+# INSTALLED APPS
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -33,11 +35,16 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
 
+    # Cloudinary
+    "cloudinary",
+    "cloudinary_storage",
+
     # Local
     "shop",
 ]
 
 
+# MIDDLEWARE
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -55,6 +62,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "sskhilona.urls"
 
 
+# TEMPLATES
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -74,7 +82,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "sskhilona.wsgi.application"
 
 
-# PostgreSQL database (Render)
+# DATABASE (Render PostgreSQL)
 DATABASES = {
     "default": dj_database_url.parse(
         os.environ.get("DATABASE_URL"),
@@ -84,6 +92,7 @@ DATABASES = {
 }
 
 
+# PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -92,6 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# INTERNATIONALIZATION
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Kolkata"
 
@@ -99,7 +109,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files
+# STATIC FILES (Render + WhiteNoise)
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
@@ -110,11 +120,19 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
-# Media files
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# MEDIA FILES (Cloudinary)
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
+# CLOUDINARY CONFIG
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET")
+)
+
+
+# DEFAULT PRIMARY KEY
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
